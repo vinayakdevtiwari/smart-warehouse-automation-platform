@@ -1,5 +1,6 @@
 # Smart Warehouse Automation Platform (OS PBL)
 
+
 **Course:** Operating Systems (CCSE0303A)  
 **Milestone:** REVIEW 1  
 **Target Syllabus Scope:** Unit 1 & Unit 2 up to **Priority Scheduling**
