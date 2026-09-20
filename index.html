@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Smart Warehouse Automation Platform — OS Scheduling Simulation</title>
+  <meta name="description" content="Smart Warehouse Automation Platform: CPU Scheduling simulation with Priority Scheduling, Gantt Charts, PCB, Process States — OS PBL Project."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ════════ SIDEBAR ════════ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <span class="logo-box">📦</span>
+      <div>
+        <div class="brand-name">SmartWare<span class="accent">OS</span></div>
+        <div class="brand-sub">Warehouse Automation Platform</div>
+      </div>
+    </div>
+  </div>
+  <ul class="nav-menu">
+    <li class="nav-label">Overview</li>
+    <li><a class="nav-item active" data-page="dashboard" href="#">🏭 Dashboard</a></li>
+    <li><a class="nav-item" data-page="warehouse"  href="#">🤖 Warehouse Floor</a></li>
+    <li class="nav-label">OS Concepts</li>
+    <li><a class="nav-item" data-page="pcb"        href="#">📋 Task Control Block</a></li>
+    <li><a class="nav-item" data-page="states"     href="#">🔄 Process States</a></li>
+    <li class="nav-label">Scheduling</li>
+    <li><a class="nav-item" data-page="scheduler"  href="#">⚡ CPU Scheduler</a></li>
+    <li><a class="nav-item" data-page="compare"    href="#">📊 Algorithm Compare</a></li>
+    <li class="nav-label">System</li>
+    <li><a class="nav-item" data-page="testcases"  href="#">🧪 Test Cases</a></li>
+  </ul>
+  <div class="sidebar-status">
+    <div class="status-dot active"></div>
+    <span>System Online</span>
+  </div>
+</nav>
+
+<!-- ════════ TOPBAR ════════ -->
+<div class="topbar">
+  <button class="hamburger" id="hamburger">☰</button>
+  <div class="topbar-title" id="topbar-title">Dashboard</div>
+  <div class="topbar-right">
+    <div class="priority-legend">
+      <span class="prio-chip p1">P1 Urgent</span>
+      <span class="prio-chip p2">P2 Normal</span>
+      <span class="prio-chip p3">P3 Routine</span>
+    </div>
+    <div class="live-time" id="liveTime"></div>
+  </div>
+</div>
+
+<!-- ════════ MAIN ════════ -->
+<main class="main" id="main">
+
+  <!-- ══ DASHBOARD ══ -->
+  <div class="page active" id="page-dashboard">
+    <div class="page-hero">
+      <div class="hero-text">
+        <div class="hero-eyebrow">OS PBL — Unit 1 &amp; Unit 2</div>
+        <h1>Smart Warehouse<br/><span class="gradient-text">Automation Platform</span></h1>
+        <p>Warehouse tasks modelled as OS processes. Priority Scheduling controls robot resource allocation — mapping real-world logistics to CPU scheduling theory.</p>
+        <div class="hero-btns">
+          <button class="btn-hero-primary" onclick="goPage('scheduler')">⚡ Launch Scheduler</button>
+          <button class="btn-hero-sec"    onclick="goPage('warehouse')">🏭 View Warehouse</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="warehouse-mini-anim" id="miniAnim"></div>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="sc-icon">📦</div>
+        <div><div class="sc-val">7</div><div class="sc-label">Task Types</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon">⚙️</div>
+        <div><div class="sc-val">2</div><div class="sc-label">Scheduling Algorithms</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon">🤖</div>
+        <div><div class="sc-val">1</div><div class="sc-label">CPU (Robot Brain)</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-icon">🧪</div>
+        <div><div class="sc-val">3</div><div class="sc-label">Test Cases</div></div>
+      </div>
+    </div>
+
+    <!-- Concept map -->
+    <div class="concept-map">
+      <h2 class="section-title">📌 OS Concept → Warehouse Mapping</h2>
+      <div class="mapping-grid">
+        <div class="map-card"><div class="map-os">OS Process</div><div class="map-arrow">→</div><div class="map-wh">🏷️ Warehouse Task</div></div>
+        <div class="map-card"><div class="map-os">PCB</div><div class="map-arrow">→</div><div class="map-wh">📋 Task Control Block</div></div>
+        <div class="map-card"><div class="map-os">CPU</div><div class="map-arrow">→</div><div class="map-wh">🤖 Robot / Handler</div></div>
+        <div class="map-card"><div class="map-os">Ready Queue</div><div class="map-arrow">→</div><div class="map-wh">📥 Pending Task Queue</div></div>
+        <div class="map-card"><div class="map-os">Priority 1</div><div class="map-arrow">→</div><div class="map-wh">🚨 Urgent Order</div></div>
+        <div class="map-card"><div class="map-os">Priority 2</div><div class="map-arrow">→</div><div class="map-wh">📦 Normal Operations</div></div>
+        <div class="map-card"><div class="map-os">Priority 3</div><div class="map-arrow">→</div><div class="map-wh">🔧 Routine Maintenance</div></div>
+        <div class="map-card"><div class="map-os">Context Switch</div><div class="map-arrow">→</div><div class="map-wh">🔄 Robot Task Handover</div></div>
+        <div class="map-card"><div class="map-os">Preemption</div><div class="map-arrow">→</div><div class="map-wh">⚡ Urgent Order Override</div></div>
+      </div>
+    </div>
+
+    <!-- Task types -->
+    <div class="task-types-section">
+      <h2 class="section-title">🏷️ Warehouse Task Types (Process Types)</h2>
+      <div class="task-grid" id="taskGrid"></div>
+    </div>
+  </div>
+
+  <!-- ══ WAREHOUSE FLOOR ══ -->
+  <div class="page" id="page-warehouse">
+    <h2 class="section-title">🏭 Animated Warehouse Floor</h2>
+    <p class="section-sub">Live simulation of the robot executing warehouse tasks as OS processes</p>
+    <div class="wh-controls">
+      <button class="btn-primary" id="wh-play-btn" onclick="warehousePlay()">▶ Start Simulation</button>
+      <button class="btn-sec"     onclick="warehouseReset()">🔄 Reset</button>
+      <div class="wh-speed-wrap">
+        <label>Speed</label>
+        <input type="range" id="wh-speed" min="1" max="5" value="3"/>
+        <span id="wh-speed-val">3x</span>
+      </div>
+    </div>
+    <div class="warehouse-floor" id="warehouseFloor">
+      <div class="wh-zone zone-urgent"   id="zone-urgent">  <div class="zone-icon">🚨</div><div class="zone-label">Urgent Orders</div></div>
+      <div class="wh-zone zone-pick"     id="zone-pick">    <div class="zone-icon">🛒</div><div class="zone-label">Picking</div></div>
+      <div class="wh-zone zone-pack"     id="zone-pack">    <div class="zone-icon">📦</div><div class="zone-label">Packing</div></div>
+      <div class="wh-zone zone-dispatch" id="zone-dispatch"><div class="zone-icon">🚚</div><div class="zone-label">Dispatch</div></div>
+      <div class="wh-zone zone-inv"      id="zone-inv">     <div class="zone-icon">📊</div><div class="zone-label">Inventory</div></div>
+      <div class="wh-zone zone-restock"  id="zone-restock"> <div class="zone-icon">🔧</div><div class="zone-label">Restocking</div></div>
+      <div class="robot" id="robot">🤖</div>
+      <div class="wh-status-bar" id="whStatusBar">Robot idle — awaiting task assignment</div>
+      <div class="conveyor-belt"></div>
+    </div>
+    <div class="wh-log-wrap">
+      <div class="wh-log-title">📜 Execution Log</div>
+      <div class="wh-log" id="wh-log"></div>
+    </div>
+    <div class="wh-current-task" id="wh-current-task"></div>
+  </div>
+
+  <!-- ══ TASK CONTROL BLOCK (PCB) ══ -->
+  <div class="page" id="page-pcb">
+    <h2 class="section-title">📋 Task Control Block (TCB / PCB)</h2>
+    <p class="section-sub">Every warehouse task is represented in memory as a Process Control Block. Click a task to inspect its TCB.</p>
+    <div class="pcb-page-layout">
+      <div class="pcb-task-list" id="pcbTaskList"></div>
+      <div class="pcb-viewer" id="pcbViewer">
+        <div class="pcb-placeholder">← Select a task to view its TCB</div>
+      </div>
+    </div>
+    <div class="pcb-state-explainer">
+      <h3>🔄 State Transitions in Warehouse Context</h3>
+      <div class="state-flow-row">
+        <div class="sfl-state new">NEW<small>Task Submitted</small></div>
+        <div class="sfl-arr">→<small>admitted</small></div>
+        <div class="sfl-state ready">READY<small>In Queue</small></div>
+        <div class="sfl-arr">→<small>dispatch</small></div>
+        <div class="sfl-state running">RUNNING<small>Robot Working</small></div>
+        <div class="sfl-arr">→<small>complete</small></div>
+        <div class="sfl-state terminated">DONE<small>Task Complete</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PROCESS STATES ══ -->
+  <div class="page" id="page-states">
+    <h2 class="section-title">🔄 Process State Diagram</h2>
+    <p class="section-sub">Warehouse task lifecycle mapped to OS process states. Click each node.</p>
+    <div class="state-diagram-layout">
+      <svg class="state-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0,10 3.5,0 7" fill="#E8845A"/>
+          </marker>
+        </defs>
+        <!-- edges -->
+        <path d="M140 160 L220 160" stroke="#E8845A" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+        <text x="150" y="148" class="sv-lbl">admitted</text>
+        <path d="M330 145 L395 120" stroke="#E8845A" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+        <text x="338" y="118" class="sv-lbl">dispatch</text>
+        <path d="M400 140 Q370 195 332 180" stroke="#D97706" stroke-width="2" fill="none" marker-end="url(#arr)" stroke-dasharray="5,3"/>
+        <text x="338" y="208" class="sv-lbl" style="fill:#D97706">preempt</text>
+        <path d="M460 120 L535 120" stroke="#E8845A" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+        <text x="472" y="108" class="sv-lbl">exit</text>
+        <!-- nodes -->
+        <circle cx="85"  cy="160" r="52" class="sv-node sv-new"  id="svn-new"   onclick="svClick('new')"/>
+        <text cx="85"  cy="156" class="sv-title">NEW</text>
+        <text cx="85"  cy="172" class="sv-sub">Task Created</text>
+        <circle cx="275" cy="160" r="52" class="sv-node sv-ready"  id="svn-ready" onclick="svClick('ready')"/>
+        <text cx="275" cy="156" class="sv-title">READY</text>
+        <text cx="275" cy="172" class="sv-sub">In Queue</text>
+        <circle cx="445" cy="115" r="52" class="sv-node sv-run"   id="svn-run"   onclick="svClick('run')"/>
+        <text cx="445" cy="111" class="sv-title">RUNNING</text>
+        <text cx="445" cy="127" class="sv-sub">Robot Active</text>
+        <circle cx="590" cy="115" r="52" class="sv-node sv-done"  id="svn-done"  onclick="svClick('done')"/>
+        <text cx="590" cy="111" class="sv-title">DONE</text>
+        <text cx="590" cy="127" class="sv-sub">Task Complete</text>
+      </svg>
+      <div class="state-info-panel" id="statePanel">
+        <div class="sip-placeholder">Click a node →</div>
+      </div>
+    </div>
+
+    <div class="scheduler-types-row">
+      <div class="sched-type-card">
+        <div class="stc-icon">🗂️</div>
+        <h4>Long-Term Scheduler</h4>
+        <p>Controls which warehouse orders enter the system. Manages order backlog — limits tasks in memory.</p>
+        <span class="stc-rate">Frequency: Low</span>
+      </div>
+      <div class="sched-type-card">
+        <div class="stc-icon">⚡</div>
+        <h4>Short-Term Scheduler</h4>
+        <p>Picks which <strong>ready task</strong> the robot handles next — the core Priority Scheduler in this platform.</p>
+        <span class="stc-rate">Frequency: Very High</span>
+      </div>
+      <div class="sched-type-card">
+        <div class="stc-icon">💾</div>
+        <h4>Mid-Term Scheduler</h4>
+        <p>Temporarily suspends low-priority tasks (swapping) when robot resources are overloaded.</p>
+        <span class="stc-rate">Frequency: Medium</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CPU SCHEDULER ══ -->
+  <div class="page" id="page-scheduler">
+    <h2 class="section-title">⚡ CPU Scheduling Simulator</h2>
+    <p class="section-sub">Add warehouse tasks, choose algorithm, run simulation to get Gantt chart + metrics</p>
+
+    <div class="sched-layout">
+      <div class="sched-left">
+        <!-- Algorithm picker -->
+        <div class="control-block">
+          <label class="ctrl-label">Scheduling Algorithm</label>
+          <div class="algo-pills" id="algoPills">
+            <button class="algo-pill active" data-algo="priority_p"  onclick="setAlgo(this)">⚡ Preemptive Priority</button>
+            <button class="algo-pill"        data-algo="priority_np" onclick="setAlgo(this)">📋 Non-Preemptive Priority</button>
+            <button class="algo-pill"        data-algo="fcfs"        onclick="setAlgo(this)">FCFS</button>
+            <button class="algo-pill"        data-algo="sjf"         onclick="setAlgo(this)">SJF</button>
+            <button class="algo-pill"        data-algo="srtf"        onclick="setAlgo(this)">SRTF</button>
+            <button class="algo-pill"        data-algo="rr"          onclick="setAlgo(this)">Round Robin</button>
+          </div>
+          <div class="rr-row" id="rrRow" style="display:none">
+            <label class="ctrl-label">Time Quantum</label>
+            <input type="number" id="quantum" value="2" min="1" max="10" class="ctrl-input small"/>
+          </div>
+        </div>
+
+        <!-- Task table -->
+        <div class="control-block">
+          <div class="task-table-header">
+            <label class="ctrl-label">Warehouse Tasks (Processes)</label>
+            <div class="quick-btns">
+              <button class="qbtn" onclick="loadPreset('tc1')">TC1</button>
+              <button class="qbtn" onclick="loadPreset('tc2')">TC2</button>
+              <button class="qbtn" onclick="loadPreset('tc3')">TC3</button>
+            </div>
+          </div>
+          <div class="task-table-wrap">
+            <table class="task-table" id="taskTable">
+              <thead>
+                <tr>
+                  <th>PID</th><th>Task Type</th><th>AT</th><th>BT</th>
+                  <th id="th-prio">Prio</th><th></th>
+                </tr>
+              </thead>
+              <tbody id="taskBody"></tbody>
+            </table>
+          </div>
+          <div class="task-actions">
+            <button class="btn-add" onclick="addTask()">➕ Add Task</button>
+            <button class="btn-primary" onclick="runSim()">▶ Run Simulation</button>
+            <button class="btn-danger"  onclick="resetSim()">🔄 Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Output panel -->
+      <div class="sched-right" id="schedRight">
+        <div class="empty-panel">
+          <div class="ep-icon">📊</div>
+          <p>Select algorithm, add tasks, then click<br/><strong>▶ Run Simulation</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ALGORITHM COMPARE ══ -->
+  <div class="page" id="page-compare">
+    <h2 class="section-title">📊 Algorithm Comparison</h2>
+    <p class="section-sub">Run the same workload through Non-Preemptive and Preemptive Priority Scheduling side-by-side</p>
+    <div class="compare-controls">
+      <div class="cc-preset-row">
+        <span style="font-weight:600;color:var(--muted2)">Preset:</span>
+        <button class="qbtn" onclick="loadComparePreset('tc1',this)">Test Case 1</button>
+        <button class="qbtn active" onclick="loadComparePreset('tc3',this)">Test Case 3 (Full)</button>
+        <button class="qbtn" onclick="loadComparePreset('tc2',this)">Test Case 2</button>
+      </div>
+      <button class="btn-primary" onclick="runComparison()">▶ Compare Both Algorithms</button>
+    </div>
+    <div class="compare-output" id="compareOutput">
+      <div class="empty-panel"><div class="ep-icon">⚖️</div><p>Click <strong>Compare Both Algorithms</strong> to see side-by-side results</p></div>
+    </div>
+  </div>
+
+  <!-- ══ TEST CASES ══ -->
+  <div class="page" id="page-testcases">
+    <h2 class="section-title">🧪 Predefined Test Cases</h2>
+    <p class="section-sub">Based on your project's 3 test scenarios. Click any to run in the scheduler.</p>
+    <div class="tc-grid">
+      <div class="tc-card">
+        <div class="tc-num">TC1</div>
+        <h3>Urgent Order Preemption</h3>
+        <p>Demonstrates how an arriving Urgent Order (Priority 1) immediately preempts a running Restocking task (Priority 3) in preemptive mode.</p>
+        <div class="tc-processes">
+          <div class="tc-proc p3-bg">P1 · Restocking · AT=0 · BT=8 · Prio=3</div>
+          <div class="tc-proc p1-bg">P2 · Urgent Order · AT=2 · BT=3 · Prio=1</div>
+        </div>
+        <button class="btn-primary" onclick="goTC(1)">▶ Run in Scheduler</button>
+      </div>
+      <div class="tc-card">
+        <div class="tc-num">TC2</div>
+        <h3>Comparative Benchmark</h3>
+        <p>4-task staggered workload. Measures how Non-Preemptive and Preemptive Priority scheduling differ across TAT, WT, and RT.</p>
+        <div class="tc-processes">
+          <div class="tc-proc p2-bg">P1 · Packing · AT=0 · BT=6 · Prio=2</div>
+          <div class="tc-proc p3-bg">P2 · Inventory Update · AT=1 · BT=4 · Prio=3</div>
+          <div class="tc-proc p1-bg">P3 · Urgent Order · AT=2 · BT=2 · Prio=1</div>
+          <div class="tc-proc p2-bg">P4 · Normal Order · AT=3 · BT=3 · Prio=2</div>
+        </div>
+        <button class="btn-primary" onclick="goTC(2)">▶ Run in Scheduler</button>
+      </div>
+      <div class="tc-card">
+        <div class="tc-num">TC3</div>
+        <h3>Full Warehouse Workload</h3>
+        <p>All 7 warehouse task types running simultaneously. Full demonstration of Priority Scheduling with all task categories.</p>
+        <div class="tc-processes">
+          <div class="tc-proc p3-bg">P1 · Restocking · AT=0 · BT=5 · Prio=3</div>
+          <div class="tc-proc p2-bg">P2 · Picking · AT=1 · BT=4 · Prio=2</div>
+          <div class="tc-proc p1-bg">P3 · Urgent Order · AT=2 · BT=3 · Prio=1</div>
+          <div class="tc-proc p2-bg">P4 · Packing · AT=3 · BT=2 · Prio=2</div>
+          <div class="tc-proc p2-bg">P5 · Dispatch · AT=4 · BT=3 · Prio=2</div>
+          <div class="tc-proc p3-bg">P6 · Inv. Update · AT=6 · BT=4 · Prio=3</div>
+          <div class="tc-proc p2-bg">P7 · Normal Order · AT=7 · BT=2 · Prio=2</div>
+        </div>
+        <button class="btn-primary" onclick="goTC(3)">▶ Run in Scheduler</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
