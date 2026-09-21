@@ -1,5 +1,5 @@
 # Smart Warehouse Automation Platform (OS PBL)
-
+![Project Icon](https://github.com/ashishjsharda/smart-warehouse-management/blob/main/icon.png)
 
 **Course:** Operating Systems (CCSE0303A)  
 **Milestone:** REVIEW 1  
